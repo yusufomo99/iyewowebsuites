@@ -1,0 +1,6 @@
+/* styles.css */
+.MuiTypography-root.MuiTypography-h4 {
+    /* Your custom styles here */
+    font-size: 2rem;
+    color: #009396;
+}
