@@ -7,7 +7,7 @@ import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/frontdesk-table';
+import { CustomersTable } from 'src/sections/customer/manageUsersTable';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import getAllUsersAPI from './getAllUsersAPI';
@@ -183,13 +183,30 @@ const Page = () => {
   const customersSelection = useSelection(customersIds);
   const [allUsers, setallUsers] = useState([])
 
-const fetchUsers = (data)=>{
-  setallUsers(data)
-}
-  useEffect(()=>{
+  const [searchQuery, setSearchQuery] = useState()
+  const [readySearch, setreadySearch] = useState(false)
+  const fetchUsers = (data) => {
+    setallUsers(data)
+  }
+
+  // Handle the change event
+  const handleSearchChange = (event) => {
+    // alert('worklin')
+    setSearchQuery(event.target.value);
+  };
+
+
+  const queryFunc = (event) => {
+    //  setreadySearch(!readySearch)
+    setallUsers([])
+    getAllUsersAPI(fetchUsers, searchQuery)
+  };
+
+
+  useEffect(() => {
 
     getAllUsersAPI(fetchUsers)
-  },[])
+  }, [])
   const handlePageChange = useCallback(
     (event, value) => {
       setPage(value);
@@ -227,7 +244,7 @@ const fetchUsers = (data)=>{
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-           Front Desk
+                 Front Desk
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -257,19 +274,31 @@ const fetchUsers = (data)=>{
                 </Stack>
               </Stack>
               <div>
-                <Button
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained" style={{ backgroundColor: '#009396'}} type="submit"
-                >
-                  Add
-                </Button>
+               
               </div>
             </Stack>
-            <CustomersSearch />
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={1}
+            >
+
+           
+                <CustomersSearch
+                  handleSearchChange={handleSearchChange}
+                  searchQuery={searchQuery}
+
+                /> 
+              <Button
+
+                onClick={queryFunc}
+              
+                variant="contained" style={{ backgroundColor: '#009396' }}
+              >
+                Submit
+              </Button>
+
+            </Stack>
             <CustomersTable
               count={data.length}
               items={allUsers?.data}
