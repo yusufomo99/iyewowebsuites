@@ -1,5 +1,5 @@
 // apiConfig.js
 
-const baseUrl = 'http://iyewoapp.com.ng';
+const baseUrl = 'https://iyewoapp.com.ng';
 
 export default baseUrl;
