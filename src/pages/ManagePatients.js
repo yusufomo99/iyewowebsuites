@@ -124,7 +124,9 @@ setTimeout(() => {
       },
       "general_examination": generalExamination, // Assuming generalExamination is available in the scope
       "dre_vaginal_examination": dreVaginalExamination, // Assuming dreVaginalExamination is available in the scope
-      "file": file // Assuming file is available in the scope
+      if (file) {
+        formData.append('file', file);
+    }
   };
   
 
@@ -142,7 +144,8 @@ setTimeout(() => {
       <Modal open={isOpen} onClose={onClose}>
         <Box style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 'auto', maxWidth: '90%', maxHeight: '90%', overflowY: 'auto', backgroundColor: '#fff', padding: 20 }}>
           <Typography variant="h5" gutterBottom>Manage Patient Records</Typography>
-          <form noValidate autoComplete="off">
+          <form noValidate autoComplete="off" enctype="multipart/form-data">
+
             <TextField label="Patient Name" fullWidth margin="normal" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
             <TextField label="Age" fullWidth margin="normal" value={age} onChange={(e) => setAge(e.target.value)}   type="number"  // This ensures only numerical input is allowed
             InputProps={{
