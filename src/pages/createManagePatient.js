@@ -2,6 +2,7 @@
 import baseUrl from '../apiConfig'; // Adjust the path accordingly
 
 const createManagePatient= async (data,dataReset) => {
+  console.log(data,"managepatientData")
    
   try {
     // Retrieve the access token from local storage

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, TextField, Button, Typography, Box } from '@mui/material';
+import { Modal, TextField, Button, Typography, Box, Select,MenuItem, FormControl, InputLabel } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import createManagePatient from './createManagePatient';
@@ -101,36 +101,32 @@ setTimeout(() => {
     const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
     
   
-  const medData = {
-    "appointment_id": apptUuid, // Assuming apptUuid is available in the scope
-    "patient_name": patientName, // Assuming patientName is available in the scope
-    "age": age, // Assuming age is available in the scope
-    "sex": sex, // Assuming sex is available in the scope
-    "associated_diagnosis": associatedDiagnosis, // Assuming associatedDiagnosis is available in the scope
-    "date": formattedDate, // Assuming date is available in the scope
-    "date_of_birth": dateOfBirth, // Assuming dateOfBirth is available in the scope
-    "presenting_complaints": presentingComplaints, // Assuming presentingComplaints is available in the scope
-    "history_of_presenting_complaints": historyOfPresentingComplaints, // Assuming historyOfPresentingComplaints is available in the scope
-    "additional_information": additionalInformation, // Assuming additionalInformation is available in the scope
-    "current_medications": currentMedications, // Assuming currentMedications is available in the scope
-    "review_of_systems": reviewOfSystems, // Assuming reviewOfSystems is available in the scope
-    "vital_signs": {
-      "systolic_BP": systolicBP, // Accessing as if from a similar structure
-      "diastolic_BP": diastolicBP, // Accessing as if from a similar structure
-      "pulse_rate": pulseRate, // Accessing as if from a similar structure
-      "temperature": temperature, // Accessing as if from a similar structure
-      "spo2": spo2, // Accessing as if from a similar structure
-    },
-    "general_examination": generalExamination, // Assuming generalExamination is available in the scope
-    "cns_examination": cnsExamination, // Assuming cnsExamination is available in the scope
-    "cardiovascular_examination": cardiovascularExamination, // Assuming cardiovascularExamination is available in the scope
-    "respiratory_examination": respiratoryExamination, // Assuming respiratoryExamination is available in the scope
-    "abdominal_examination": abdominalExamination, // Assuming abdominalExamination is available in the scope
-    "musculoskeletal_examination": musculoskeletalExamination, // Assuming musculoskeletalExamination is available in the scope
-    "urogenital_examination": urogenitalExamination, // Assuming urogenitalExamination is available in the scope
-    "dre_vaginal_examination": dreVaginalExamination, // Assuming dreVaginalExamination is available in the scope
-    "file": file // Assuming file is available in the scope
+    const medData = {
+      "appointment_id": apptUuid, // Assuming apptUuid is available in the scope
+      "patient_name": patientName, // Assuming patientName is available in the scope
+      "age": age, // Assuming age is available in the scope
+      "sex": sex, // Assuming sex is available in the scope
+      "diagnosis": associatedDiagnosis, // Renamed to match curl command
+      "associated_diagnosis": associatedDiagnosis, // Assuming associatedDiagnosis is available in the scope
+      "date": formattedDate, // Assuming formattedDate is available in the scope
+      "date_of_birth": dateOfBirth, // Assuming dateOfBirth is available in the scope
+      "presenting_complaints": presentingComplaints, // Assuming presentingComplaints is available in the scope
+      "history_of_presenting_complaints": historyOfPresentingComplaints, // Assuming historyOfPresentingComplaints is available in the scope
+      "additional_information": additionalInformation, // Assuming additionalInformation is available in the scope
+      "current_medications": currentMedications, // Assuming currentMedications is available in the scope
+      "review_of_systems": `CNS: ${cnsExamination}; CVS: ${cardiovascularExamination}; RESP: ${respiratoryExamination}`, // Correctly formatted as a single string,
+      "vital_signs": {
+          "systolic_bp": systolicBP, // Corrected field name and assuming systolicBP is available in the scope
+          "diastolic_bp": diastolicBP, // Corrected field name and assuming diastolicBP is available in the scope
+          "pulse_rate": pulseRate, // Assuming pulseRate is available in the scope
+          "temperature": temperature, // Assuming temperature is available in the scope
+          "spo2": spo2 // Assuming spo2 is available in the scope
+      },
+      "general_examination": generalExamination, // Assuming generalExamination is available in the scope
+      "dre_vaginal_examination": dreVaginalExamination, // Assuming dreVaginalExamination is available in the scope
+      "file": file // Assuming file is available in the scope
   };
+  
 
 
 
@@ -154,7 +150,21 @@ setTimeout(() => {
                 min: 0,  // Optionally set a minimum value
               }
             }} />
-            <TextField label="Sex" fullWidth margin="normal" value={sex} onChange={(e) => setSex(e.target.value)} />
+            {/* <TextField label="Sex" fullWidth margin="normal" value={sex} onChange={(e) => setSex(e.target.value)} /> */}
+            
+            <FormControl fullWidth margin="normal">
+  <InputLabel id="sex-label">Sex</InputLabel>
+  <Select
+    labelId="sex-label"
+    value={sex}
+    label="Sex"
+    onChange={(e) => setSex(e.target.value)}
+  >
+    <MenuItem value="male">Male</MenuItem>
+    <MenuItem value="female">Female</MenuItem>
+  </Select>
+</FormControl>
+
             <TextField label="Associated Diagnosis" fullWidth margin="normal" value={associatedDiagnosis} onChange={(e) => setAssociatedDiagnosis(e.target.value)} />
             {/* <TextField label="Date" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} value={date} onChange={(e) => setDate(e.target.value)} /> */}
             <TextField label="Date of Birth" fullWidth margin="normal" type="date" InputLabelProps={{ shrink: true }} value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
@@ -165,8 +175,8 @@ setTimeout(() => {
             <TextField label="Review of Systems" fullWidth multiline rows={3} margin="normal" value={reviewOfSystems} onChange={(e) => setReviewOfSystems(e.target.value)} />
             
             {/* Vital Signs */}
-            <TextField label="Systolic Blood Pressure" fullWidth margin="normal" value={systolicBP} onChange={(e) => setSystolicBP(e.target.value)} />
-            <TextField label="Diastolic Blood Pressure" fullWidth margin="normal" value={diastolicBP} onChange={(e) => setDiastolicBP(e.target.value)} />
+            <TextField label="Systolic Blood Pressure" fullWidth margin="normal"  type="number" value={systolicBP} onChange={(e) => setSystolicBP(e.target.value)} />
+            <TextField label="Diastolic Blood Pressure" fullWidth margin="normal"  type="number"  value={diastolicBP} onChange={(e) => setDiastolicBP(e.target.value)} />
             <TextField label="Pulse Rate" fullWidth margin="normal" value={pulseRate} onChange={(e) => setPulseRate(e.target.value)}
               type="number"  // This ensures only numerical input is allowed
               InputProps={{

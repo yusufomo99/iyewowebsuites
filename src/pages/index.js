@@ -43,7 +43,7 @@ const reloginContext = ()=>{
     
   },[])
 
-  const monthlyCounts = loadStats?.monthly_appointments.slice(1).map((stat) => stat.count);
+  const monthlyCounts = loadStats?.monthly_appointments.map((stat) => stat.count);
 
  return  (
   <>
