@@ -110,12 +110,25 @@ const [pisModalOpen,setpisModalOpen]  = useState(false);
                           <Typography variant="subtitle2">{customer.name}</Typography>
                         </Stack>
                       </TableCell>
-                      <TableCell>{customer.email}</TableCell>
+                      <TableCell
+                                         style={{cursor:'pointer'}}
+                                         onClick={()=>{handleOpen(customer)}}
+                                         hover key={customer.id} selected={isSelected}
+                      >{customer.email}</TableCell>
                       {/* <TableCell>
                         {customer.condition}
                       </TableCell> */}
-                      <TableCell>{customer.phone}</TableCell>
-                      <TableCell>{customer.wallet_balance}</TableCell>
+                      <TableCell
+                                         style={{cursor:'pointer'}}
+                                         onClick={()=>{handleOpen(customer)}}
+                                         hover key={customer.id} selected={isSelected}
+                      >{customer.phone}</TableCell>
+                      <TableCell
+                      
+                      style={{cursor:'pointer'}}
+                      onClick={()=>{handleOpen(customer)}}
+                      hover key={customer.id} selected={isSelected}
+                      >{customer.wallet_balance}</TableCell>
                       <Button variant="contained" onClick={phandleOpen} color="primary">Manage</Button>
                     </TableRow>
                   );

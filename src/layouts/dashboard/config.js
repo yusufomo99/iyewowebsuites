@@ -63,7 +63,7 @@ export const getItems = (userType) => {
       },
 
 {
-        title: 'Nurse',
+        title: 'Take Vitals',
         path: '/nurse',
         icon: (
           <SvgIcon fontSize="small">
@@ -165,7 +165,7 @@ export const getItems = (userType) => {
   }else if(userType === 'nurse') {
 
     return [{
-      title: 'Nurse',
+      title: 'Take Vitals',
       path: '/nurse',
       icon: (
         <SvgIcon fontSize="small">
