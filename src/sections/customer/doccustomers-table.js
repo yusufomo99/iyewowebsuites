@@ -93,8 +93,10 @@ export const CustomersTable = (props) => {
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>MEDICAL CONDITION</TableCell>
-                  {/* <TableCell>Phone</TableCell> */}
-                  {/* <TableCell>Action</TableCell> */}
+                  <TableCell>Systolic Blood Pressure</TableCell>
+                  {/* <TableCell>MEDICAL CONDITION</TableCell> */}
+                  <TableCell>Diastolic Blood Pressure</TableCell>
+                  <TableCell>BMI </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -103,16 +105,18 @@ export const CustomersTable = (props) => {
                   // const createdAt = format(customer.created_at, 'dd/MM/yyyy');
 
                   return (
-                    <TableRow hover key={customer.uuid} selected={isSelected}>
+                    <TableRow style={{cursor:'pointer'}}  hover key={customer.uuid} selected={isSelected}
+                    onClick={()=>handleManagePatientsOpen(
+                      customer.patient.name,
+                      customer.uuid,
+                      customer.medical_records,
+                      customer.lab_records,
+                      customer.description 
+                      )
+                      }
+                    >
                      
-                      <TableCell onClick={()=>handleManagePatientsOpen(
-                        customer.patient.name,
-                        customer.uuid,
-                        customer.medical_records,
-                        customer.lab_records,
-                        customer.description 
-                        )
-                        }>
+                      <TableCell >
                         <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src='' style={{ backgroundColor: '#009396'}}>{getInitials(customer.doctor.name)}</Avatar>
                           <Typography variant="subtitle2">{customer.patient.name}</Typography>
@@ -122,6 +126,12 @@ export const CustomersTable = (props) => {
                       <TableCell>
                         {customer.description ? customer.description : 'NA'}
                       </TableCell>
+                      <TableCell>{customer.patient.systolic_blood_pressure}</TableCell>
+                      {/* <TableCell>
+                        {customer.condition}
+                      </TableCell> */}
+                      <TableCell>{customer.patient.diastolic_blood_pressure}</TableCell>
+                      <TableCell>{customer.patient.bmi}</TableCell>
                       {/* <TableCell>{createdAt}</TableCell> */}
                     </TableRow>
                   );

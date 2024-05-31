@@ -92,7 +92,10 @@ export const CustomersTable = (props) => {
                   // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                   return (
-                    <TableRow hover key={customer.id} selected={isSelected}>
+                    <TableRow
+                    style={{cursor:'pointer'}}
+                    onClick={()=>{openModal( customer.uuid)}}
+                    hover key={customer.id} selected={isSelected}>
                       {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isSelected}
@@ -105,7 +108,7 @@ export const CustomersTable = (props) => {
                           }}
                         />
                       </TableCell> */}
-                      <TableCell onClick={()=>{openModal( customer.uuid)}}>
+                      <TableCell >
                         <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src='' style={{ backgroundColor: '#009396'}}>{getInitials(customer.patient.name)}</Avatar>
                           <Typography variant="subtitle2">{customer.patient.name}</Typography>

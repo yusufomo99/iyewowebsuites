@@ -13,11 +13,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Button,
   Typography,
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 import AppointmentModal from '../../pages/vitalsModal';
+import HealthDeskModal from './healthdeskModal';
+import UserCrud from './userCrud'
 
 export const CustomersTable = (props) => {
   const {
@@ -40,50 +43,48 @@ export const CustomersTable = (props) => {
   const [patientName, setPatientName] = useState('');
   const [patientCondition, setPatientCondition] = useState('');
   const [doctorOnDuty, setDoctorOnDuty] = useState('');
-  const [apptUuid,setUuid] = useState('');
+  const [healthData,sethealthData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+const [pisModalOpen,setpisModalOpen]  = useState(false);
 
-  const openModal = (customerName,uuid) => {
-    setUuid(uuid)
-    setModalIsOpen(true)
-  
+  const phandleOpen = () => {
+    setpisModalOpen(true);
   };
-  const closeModal = () => setModalIsOpen(false);
+
+  const phandleClose = () => {
+    setpisModalOpen(false);
+  };
+
+  const handleOpen = (customer) =>{
+   
+    sethealthData(customer)
+    setOpenModal(true)
+  };
+  const handleClose = () => setOpenModal(false);
+
+ 
+ 
+
 
   return (
     <>
-      <AppointmentModal
-        showModal={modalIsOpen}
-        // patientName={patientName}
-        // patientCondition={patientCondition}
-        // doctorOnDuty={doctorOnDuty}
-        closeModal={closeModal}
-        apptUuid={apptUuid}
-      />
-
+        <HealthDeskModal open={openModal} onClose={handleClose} data={healthData} />
+        <UserCrud open={pisModalOpen} onClose={phandleClose} />
       <Card>
+
+    
         <Scrollbar>
           <Box sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedAll}
-                      indeterminate={selectedSome}
-                      onChange={(event) => {
-                        if (event.target.checked) {
-                          onSelectAll?.();
-                        } else {
-                          onDeselectAll?.();
-                        }
-                      }}
-                    />
-                  </TableCell>
+                 
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
                   {/* <TableCell>MEDICAL CONDITION</TableCell> */}
                   <TableCell>Phone</TableCell>
                   <TableCell>Wallet Balance </TableCell>
+                  <TableCell>Action </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -92,20 +93,16 @@ export const CustomersTable = (props) => {
                   // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                   return (
-                    <TableRow hover key={customer.id} selected={isSelected}>
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={(event) => {
-                            if (event.target.checked) {
-                              onSelectOne?.(customer.id);
-                            } else {
-                              onDeselectOne?.(customer.id);
-                            }
-                          }}
-                        />
-                      </TableCell>
+                    <TableRow
+                   
+                   
+                    
+                    >
+                    
                       <TableCell
+                   style={{cursor:'pointer'}}
+                   onClick={()=>{handleOpen(customer)}}
+                   hover key={customer.id} selected={isSelected}
                     //    onClick={()=>{openModal( customer.uuid)}}
                       >
                         <Stack alignItems="center" direction="row" spacing={2}>
@@ -119,6 +116,7 @@ export const CustomersTable = (props) => {
                       </TableCell> */}
                       <TableCell>{customer.phone}</TableCell>
                       <TableCell>{customer.wallet_balance}</TableCell>
+                      <Button variant="contained" onClick={phandleOpen} color="primary">Manage</Button>
                     </TableRow>
                   );
                 })}

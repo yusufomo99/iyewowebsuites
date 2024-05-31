@@ -36,7 +36,7 @@ if(searchQuery){
       fetchUsers(data)
     //   fetchCHO(data)
       // Handle the data from the API response
-       console.log('All Users:', data);
+      //  console.log('All Users:', data);
     } else {
       // Handle errors here
     //   reloginContext()

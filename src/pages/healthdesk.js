@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { Box, Button, Container, Stack, SvgIcon, Typography, TextField } from '@mui/material';
-import { DatePicker, LocalizationProvider, AdapterDateFns } from '@mui/x-date-pickers';
+import { Box, Button, Container, Stack, Typography, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/managefinance-table';
+import { CustomersTable } from 'src/sections/customer/manageUsersTable';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import CreateCHOModal from './CreateCHOModal';
-import getDepositsAPI from './getDepositsAPI';
+import getAllUsersAPI from './getAllUsersAPI';
+
 
 const now = new Date();
 
@@ -31,7 +30,7 @@ const data = [
     name: 'Carson Darrin',
     phone: '304-428-3097'
   },
-  // ...other data entries
+  // ... other data entries
 ];
 
 const useCustomers = (page, rowsPerPage) => {
@@ -58,36 +57,32 @@ const Page = () => {
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [mfinanceData, setFinanceData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [readySearch, setReadySearch] = useState(false);
+  const [allUsers, setallUsers] = useState([]);
+
+  const [searchQuery, setSearchQuery] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+ 
+
+
+  const fetchUsers = (data) => {
+    setallUsers(data);
+  };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const queryFunc = () => {
-    setFinanceData([]);
-    getDepositsAPI(loadFinance, searchQuery, startDate, endDate);
+    setallUsers([]);
+    getAllUsersAPI(fetchUsers, searchQuery, startDate, endDate);
   };
 
   useEffect(() => {
-    getDepositsAPI(loadFinance);
-  }, [readySearch]);
-
-  const loadAgain = () => {
-    setReadySearch(!readySearch);
-  };
-
-  const loadFinance = (apiData) => {
-    setFinanceData(apiData);
-  };
+    getAllUsersAPI(fetchUsers);
+  }, []);
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -118,6 +113,9 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
+    
+    
+
           <Stack spacing={3}>
             <Stack
               direction="row"
@@ -126,7 +124,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Manage Finance
+                  Health Desk
                 </Typography>
               </Stack>
               <div></div>
@@ -136,10 +134,10 @@ const Page = () => {
               direction="row"
               spacing={1}
             >
-              <CustomersSearch 
+              <CustomersSearch
                 handleSearchChange={handleSearchChange}
                 searchQuery={searchQuery}
-              /> 
+              />
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Start Date"
@@ -156,7 +154,6 @@ const Page = () => {
               </LocalizationProvider>
               <Button
                 onClick={queryFunc}
-              
                 variant="contained" style={{ backgroundColor: '#009396' }}
               >
                 Search
@@ -164,8 +161,7 @@ const Page = () => {
             </Stack>
             <CustomersTable
               count={data.length}
-              items1={mfinanceData?.data}
-              items={customers}
+              items={allUsers?.data}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
               onPageChange={handlePageChange}
@@ -175,12 +171,10 @@ const Page = () => {
               page={page}
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
-              getDepositsAPI={loadAgain}
             />
           </Stack>
         </Container>
       </Box>
-      <CreateCHOModal isOpen={isModalOpen} onClose={closeModal} getDepositsAPI={getDepositsAPI} />
     </>
   );
 };

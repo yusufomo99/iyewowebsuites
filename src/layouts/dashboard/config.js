@@ -25,20 +25,46 @@ export const getItems = (userType) => {
           </SvgIcon>
         )
       },
+
       
+
+      
+    
       {
-        title: 'Manage CHO',
-        path: '/ManageCHO',
+        title: 'Add User',
+        path: '/AddUser',
         icon: (
           <SvgIcon fontSize="small">
             <UserCircleIcon />
           </SvgIcon>
         )
       },
+
+      {
+        title: 'Health Desk',
+        path: '/healthdesk',
+        icon: (
+          <SvgIcon fontSize="small">
+            <UserCircleIcon />
+          </SvgIcon>
+        )
+      },
+
+      
     
       {
-        title: 'Add User',
-        path: '/AddUser',
+        title: 'Manage Patients',
+        path: '/doctors',
+        icon: (
+          <SvgIcon fontSize="small">
+            <UserCircleIcon />
+          </SvgIcon>
+        )
+      },
+
+{
+        title: 'Nurse',
+        path: '/nurse',
         icon: (
           <SvgIcon fontSize="small">
             <UserCircleIcon />
@@ -75,43 +101,23 @@ export const getItems = (userType) => {
       },
     
       {
-        title: 'Manage Patients',
-        path: '/doctors',
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserCircleIcon />
-          </SvgIcon>
-        )
-      },
-
-{
-        title: 'Clinic',
-        path: '/clinic',
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserCircleIcon />
-          </SvgIcon>
-        )
-      },
-    
-      {
-        title: 'Front Desk',
-        path: '/frontdesk',
-        icon: (
-          <SvgIcon fontSize="small">
-            <UserCircleIcon />
-          </SvgIcon>
-        )
-      },
-    
-    
-     
-      {
         title: 'Laboratory',
         path: '/laboratory',
         icon: (
           <SvgIcon fontSize="small">
             <MagnifyingGlassPlusIcon />
+          </SvgIcon>
+        )
+      },
+
+      
+      
+      {
+        title: 'Manage CHO',
+        path: '/ManageCHO',
+        icon: (
+          <SvgIcon fontSize="small">
+            <UserCircleIcon />
           </SvgIcon>
         )
       },
@@ -159,14 +165,27 @@ export const getItems = (userType) => {
   }else if(userType === 'nurse') {
 
     return [{
-      title: 'Clinic',
-      path: '/clinic',
+      title: 'Nurse',
+      path: '/nurse',
       icon: (
         <SvgIcon fontSize="small">
           <UserCircleIcon />
         </SvgIcon>
       )
-    },];
+    },
+
+    
+    {
+      title: 'Appointments',
+      path: '/Appointments',
+      icon: (
+        <SvgIcon fontSize="small">
+          <CalendarIcon />
+        </SvgIcon>
+      )
+    },
+  
+  ];
   }else if(userType === 'finance') {
 
     return [{
@@ -181,14 +200,27 @@ export const getItems = (userType) => {
   }else if(userType === 'hdo') {
 
     return [{
-      title: 'Frontdesk ',
-      path: '/frontdesk',
+      title: 'Health Desk ',
+      path: '/healthdesk',
       icon: (
         <SvgIcon fontSize="small">
           <UserCircleIcon />
         </SvgIcon>
       )
-    },];
+    },
+
+    
+    {
+      title: 'Appointments',
+      path: '/Appointments',
+      icon: (
+        <SvgIcon fontSize="small">
+          <CalendarIcon />
+        </SvgIcon>
+      )
+    },
+  
+  ];
   }
 
   // Return an empty array or some other default if the user type doesn't match

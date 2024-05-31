@@ -78,12 +78,15 @@ export const CustomersTable = (props) => {
                         }
                       }}
                     />
+
+ 
+
                   </TableCell> */}
                   <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
+                  <TableCell>Systolic Blood Pressure</TableCell>
                   {/* <TableCell>MEDICAL CONDITION</TableCell> */}
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Wallet Balance </TableCell>
+                  <TableCell>Diastolic Blood Pressure</TableCell>
+                  <TableCell>BMI </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -92,7 +95,7 @@ export const CustomersTable = (props) => {
                   // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                   return (
-                    <TableRow hover key={customer.id} selected={isSelected}>
+                    <TableRow style={{cursor:'pointer'}} onClick={()=>{openModal( customer.patient.uuid)}} hover key={customer.id} selected={isSelected}>
                       {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isSelected}
@@ -105,18 +108,18 @@ export const CustomersTable = (props) => {
                           }}
                         />
                       </TableCell> */}
-                      <TableCell onClick={()=>{openModal( customer.patient.uuid)}}>
+                      <TableCell >
                         <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src='' style={{ backgroundColor: '#009396'}}>{getInitials(customer.patient.name)}</Avatar>
                           <Typography variant="subtitle2">{customer.patient.name}</Typography>
                         </Stack>
                       </TableCell>
-                      <TableCell>{customer.patient.email}</TableCell>
+                      <TableCell>{customer.patient.systolic_blood_pressure}</TableCell>
                       {/* <TableCell>
                         {customer.condition}
                       </TableCell> */}
-                      <TableCell>{customer.patient.phone}</TableCell>
-                      <TableCell>{customer.patient.wallet_balance}</TableCell>
+                      <TableCell>{customer.patient.diastolic_blood_pressure}</TableCell>
+                      <TableCell>{customer.patient.bmi}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -50,7 +50,7 @@ const Page = () => {
           <MenuItem value="lab">Lab</MenuItem>
           <MenuItem value="doctor">Doctor</MenuItem>
           <MenuItem value="cho">CHO</MenuItem>
-          <MenuItem value="hdo">HDO</MenuItem>
+          <MenuItem value="hdo">Health Desk Officer</MenuItem>
           <MenuItem value="user">User</MenuItem>
           <MenuItem value="finance">Finance</MenuItem>
         </Select>
@@ -65,8 +65,10 @@ const Page = () => {
 
 <TextField
         id="phone"
-        label="Phone"
-     
+        label="Email"
+        type='email'
+        
+        placeholder='e.g abc@byz.com'
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />

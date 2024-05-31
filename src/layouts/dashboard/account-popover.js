@@ -3,12 +3,22 @@ import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
+import ResetPassword from './ResetPassword'
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
   const auth = useAuth();
   const [staffName, setstaffName] = useState()
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
 useEffect(()=>{
 
   // Retrieve user details from local storage
@@ -44,6 +54,13 @@ setstaffName(user?.name)
       open={open}
       PaperProps={{ sx: { width: 200 } }}
     >
+
+<div>
+      {/* <Button variant="contained" color="primary" onClick={handleOpen}>
+        Open Reset Password Modal
+      </Button> */}
+      <ResetPassword open={isModalOpen} onClose={handleClose} />
+    </div>
       <Box
         sx={{
           py: 1.5,
@@ -53,6 +70,7 @@ setstaffName(user?.name)
         <Typography variant="overline">
           Account
         </Typography>
+        
         <Typography
           color="text.secondary"
           variant="body2"
@@ -61,6 +79,19 @@ setstaffName(user?.name)
         </Typography>
       </Box>
       <Divider />
+      <Box
+        sx={{
+          py: 1.5,
+          px: 2
+        }}
+      >
+      <MenuItem variant="overline"
+        onClick={handleOpen}
+        >
+       Reset Password 
+        </MenuItem>
+</Box>
+<Divider />
       <MenuList
         disablePadding
         dense

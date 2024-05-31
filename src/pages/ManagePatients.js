@@ -45,7 +45,10 @@ const ManagePatients = (
   const [abdominalExamination, setAbdominalExamination] = useState('');
   const [musculoskeletalExamination, setMusculoskeletalExamination] = useState('');
   const [urogenitalExamination, setUrogenitalExamination] = useState('');
-  const [dreVaginalExamination, setDreVaginalExamination] = useState('');
+  const [dreVaginalExamination, setDreVaginalExamination] = useState(''); 
+  const [labAttendant, setlabAttendant] = useState('');
+  const [referral, setreferral] = useState('');
+
 
   // File upload state
   const [file, setFile] = useState(null);
@@ -214,7 +217,10 @@ setTimeout(() => {
             <TextField label="Musculoskeletal Examination" fullWidth multiline rows={3} margin="normal" value={musculoskeletalExamination} onChange={(e) => setMusculoskeletalExamination(e.target.value)} />
             <TextField label="Urogenital Examination" fullWidth multiline rows={3} margin="normal" value={urogenitalExamination} onChange={(e) => setUrogenitalExamination(e.target.value)} />
             <TextField label="DRE/Vaginal Examination" fullWidth multiline rows={3} margin="normal" value={dreVaginalExamination} onChange={(e) => setDreVaginalExamination(e.target.value)} />
+            <TextField label="Assign Lab Attendant" fullWidth multiline rows={3} margin="normal" value={labAttendant} onChange={(e) => setlabAttendant(e.target.value)} />
+            <TextField label="Referral Description" fullWidth multiline rows={3} margin="normal" value={referral} onChange={(e) => setreferral(e.target.value)} />
 
+            
             {/* File Upload */}
             <Typography variant="body1" component="div">File Upload:</Typography>
             <input type="file" onChange={handleFileChange} />

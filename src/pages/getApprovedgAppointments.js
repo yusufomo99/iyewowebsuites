@@ -5,9 +5,9 @@ const getApprovedgAppointments = async (fetchCHO,page, reloginContext,searchQuer
  
   let apiUrl;
   if (searchQuery){
-    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=10&search=${searchQuery}`
+    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=50&search=${searchQuery}`
   }else {
-    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=10`
+    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=50`
   }
   try {
     // alert(page)
@@ -33,7 +33,7 @@ const getApprovedgAppointments = async (fetchCHO,page, reloginContext,searchQuer
       const data = await response.json();
       fetchCHO(data)
       // Handle the data from the API response
-    //   console.log('Approved Appointments:', data);
+      //  console.log('Approved Appointments:', data);
     } else {
       // Handle errors here
       reloginContext()

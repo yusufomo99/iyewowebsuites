@@ -66,7 +66,10 @@ export const CustomersTable = (props) => {
     setdepositUuid(uuid)
     //  approveDepositAPI(uuid, approvalSuccess)
   }
+const declineFunc = ()=>{
 
+  alert("API for declining is being completed")
+}
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
@@ -176,14 +179,40 @@ export const CustomersTable = (props) => {
                     {customer.created_at}
                     </TableCell>
                     <TableCell>
-                 <button
-  style={{ backgroundColor: '#009396', color: '#fff', padding: '10px 15px', borderRadius: '5px', cursor: 'pointer' }}
-  onClick={() => {
-    callApproveDepositAPI(customer.uuid)
-  }}
->
-  Approve
-</button>
+
+
+
+                    <div style={{ display: 'flex', gap: '10px' }}>
+      <button
+        style={{
+          backgroundColor: '#009396',
+          color: '#fff',
+          padding: '10px 15px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          border: 'none',
+        }}
+        onClick={() => {
+          callApproveDepositAPI(customer.uuid);
+        }}
+      >
+        Approve
+      </button>
+      <button
+        style={{
+          backgroundColor: '#003396',
+          color: '#fff',
+          padding: '10px 15px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          border: 'none',
+        }}
+        onClick={declineFunc}
+      >
+        Decline
+      </button>
+    </div>
+
                     </TableCell>
                   </TableRow>
                 );

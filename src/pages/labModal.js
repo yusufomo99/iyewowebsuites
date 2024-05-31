@@ -3,64 +3,52 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import createLabRecords from './createLabRecords'
-const dummyTests = [
-  { id: 1, name: 'Blood Test' },
-  { id: 2, name: 'Urine Analysis' },
-  { id: 3, name: 'X-ray' },
-];
+import createLabRecords from './createLabRecords';
 
-const LabModal = ({ showModal, closeModal, apptUuid}) => {
+const LabModal = ({ showModal, closeModal, apptUuid }) => {
   const [labRecord, setLabRecord] = useState({
     testType: '',
     result: '',
     date: '',
     technician: '',
+    file: null,
   });
+  const [pname, setName] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLabRecord((prevLabRecord) => ({ ...prevLabRecord, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    setLabRecord((prevLabRecord) => ({ ...prevLabRecord, file: e.target.files[0] }));
+  };
 
-  const dataReset = ()=>{
+  const dataReset = () => {
     setLabRecord({
       testType: '',
       result: '',
       date: '',
       technician: '',
+      file: null,
     });
-  }
-
-  const currentDate = new Date();
-const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-
-const labData = {
-  "appointment_id": apptUuid,
-  "type": labRecord.testType,
-  "result": labRecord.result,
-  "date": formattedDate
-};
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-  createLabRecords(labData,dataReset)
-  // console.log(labData,"labData")
-    // alert(apptUuid)
-    // Simulate deep learning analysis
-    // analyzeLabRecord(labRecord);
-    // Close the modal after submission
-    // closeModal();
   };
 
-  const analyzeLabRecord = (labRecord) => {
-    // Placeholder logic for deep learning
-    console.log('Deep learning analysis on lab record:', labRecord);
-    // Replace this with your actual deep learning logic
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+
+  const labData = {
+    appointment_id: apptUuid,
+    type: labRecord.testType,
+    result: labRecord.result,
+    date: formattedDate,
+    file: labRecord.file,
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    createLabRecords(labData, dataReset);
   };
 
   return (
@@ -86,24 +74,15 @@ const labData = {
           Laboratory Records Form
         </Typography>
         <form onSubmit={handleFormSubmit}>
-          <Select
+          <TextField
             fullWidth
-            label="Test Type"
-            name="testType"
-            value={labRecord.testType}
-            onChange={handleInputChange}
             margin="normal"
-            variant="outlined"
-          >
-            <MenuItem value="" disabled>
-              Select a test
-            </MenuItem>
-            {dummyTests.map((test) => (
-              <MenuItem key={test.id} value={test.name}>
-                {test.name}
-              </MenuItem>
-            ))}
-          </Select>
+            variant="filled"
+            id="name"
+            label="Test Name"
+            value={pname}
+            onChange={(e) => setName(e.target.value)}
+          />
           <TextField
             fullWidth
             label="Result"
@@ -122,6 +101,9 @@ const labData = {
             onChange={handleInputChange}
             margin="normal"
             variant="filled"
+            InputLabelProps={{
+              shrink: true,
+            }}
           /> */}
           {/* <TextField
             fullWidth
@@ -132,8 +114,20 @@ const labData = {
             margin="normal"
             variant="filled"
           /> */}
-                     
-          <Button style={{ backgroundColor: '#009396'}} type="submit" variant="contained" color="primary" mt={2}>
+          <input
+            accept="application/pdf,image/*"
+            style={{ marginTop: '16px', marginBottom: '16px', width: '100%' }}
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+          />
+          <Button
+            style={{ backgroundColor: '#009396' }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            mt={2}
+          >
             Submit
           </Button>
         </form>

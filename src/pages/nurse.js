@@ -4,7 +4,7 @@ import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, SvgIcon, Typography, TextField } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/clinic-table';
@@ -181,33 +181,40 @@ const Page = () => {
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
-  const [allUsers, setallUsers] = useState([])
-
-  const [searchQuery, setSearchQuery] =useState()
+  const [allUsers, setAllUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const handleSearchChange = (event) => {
-    // alert('worklin')
     setSearchQuery(event.target.value);
-  }; 
+  };
 
-  const reloginContext = ()=>{
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
+  };
+
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
+  };
+
+  const reloginContext = () => {
     router.push('/auth/login');
+  };
 
-  }
-  
-  const queryFunc= (event) => {
-    //  setreadySearch(!readySearch)
-    setallUsers([])
-    getAllUsersAPI(fetchUsers,page,reloginContext,searchQuery)
-    }; 
+  const queryFunc = (event) => {
+    setAllUsers([]);
+    getAllUsersAPI(fetchUsers, page, reloginContext, searchQuery, startDate, endDate);
+  };
 
-const fetchUsers = (data)=>{
-  setallUsers(data)
-}
-  useEffect(()=>{
+  const fetchUsers = (data) => {
+    setAllUsers(data);
+  };
 
-    getAllUsersAPI(fetchUsers)
-  },[])
+  useEffect(() => {
+    getAllUsersAPI(fetchUsers);
+  }, []);
+
   const handlePageChange = useCallback(
     (event, value) => {
       setPage(value);
@@ -245,36 +252,49 @@ const fetchUsers = (data)=>{
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-               Clinic
+                  Nurse
                 </Typography>
-               
               </Stack>
-              
             </Stack>
             <Stack
-               alignItems="center"
-               direction="row"
-               spacing={1}
-             >
-            <CustomersSearch 
-            handleSearchChange={handleSearchChange}
-            searchQuery = {searchQuery}
-             
-            /> 
-
-             <Button
-
-             onClick={queryFunc}
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained" style={{ backgroundColor: '#009396'}} 
-                >
-                Submit
-                </Button>
-                </Stack>
+              alignItems="center"
+              direction="row"
+              spacing={1}
+            >
+              <CustomersSearch 
+                handleSearchChange={handleSearchChange}
+                searchQuery={searchQuery}
+              />
+              <TextField
+                label="Start Date"
+                type="date"
+                value={startDate}
+                onChange={handleStartDateChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                label="End Date"
+                type="date"
+                value={endDate}
+                onChange={handleEndDateChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <Button
+                onClick={queryFunc}
+                startIcon={(
+                  <SvgIcon fontSize="small">
+                    {/* <PlusIcon /> */}
+                  </SvgIcon>
+                )}
+                variant="contained" style={{ backgroundColor: '#009396'}} 
+              >
+                Search
+              </Button>
+            </Stack>
             <CustomersTable
               count={data.length}
               items={allUsers?.data}

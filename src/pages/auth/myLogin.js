@@ -29,11 +29,11 @@ const myLogin = async (router, email, password,loadingComplete,role) => {
         }else if(role=='lab'){
           router.push('/laboratory');
         }else if(role=='nurse'){
-          router.push('/clinic');
+          router.push('/nurse');
         }else if(role=='finance'){
           router.push('/ManageFinance');
         }else if(role=='hdo'){
-          router.push('/frontdesk');
+          router.push('/healthdesk');
         }
         // Store the access token in local storage
         localStorage.setItem('access_token', data?.data?.access_token);
