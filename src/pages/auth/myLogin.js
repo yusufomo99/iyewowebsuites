@@ -32,6 +32,8 @@ const myLogin = async (router, email, password,loadingComplete,role) => {
           router.push('/nurse');
         }else if(role=='finance'){
           router.push('/ManageFinance');
+        }else if(role=='pharmacy'){
+          router.push('/pharmacy');
         }else if(role=='hdo'){
           router.push('/healthdesk');
         }

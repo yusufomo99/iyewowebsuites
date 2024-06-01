@@ -74,19 +74,7 @@ export const Appointmentstable = (props) => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={selectedAll}
-                          indeterminate={selectedSome}
-                          onChange={(event) => {
-                            if (event.target.checked) {
-                              onSelectAll?.();
-                            } else {
-                              onDeselectAll?.();
-                            }
-                          }}
-                        />
-                      </TableCell>
+                     
                       <TableCell>Name</TableCell>
                       <TableCell>Email</TableCell>
                       <TableCell>MEDICAL CONDITION</TableCell>
@@ -100,20 +88,15 @@ export const Appointmentstable = (props) => {
                       const createdAt = format(new Date(customer?.created_at), 'dd/MM/yyyy');
   
                       return (
-                        <TableRow hover key={customer.id} selected={isSelected}>
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isSelected}
-                              onChange={(event) => {
-                                if (event.target.checked) {
-                                  onSelectOne?.(customer?.patient.uuid);
-                                } else {
-                                  onDeselectOne?.(customer?.patient.uuid);
-                                }
-                              }}
-                            />
-                          </TableCell>
-                          <TableCell onClick={() => openModal(customer.patient.name, customer.description, customer.uuid)}>
+                        <TableRow
+                        style={{cursor:'pointer'}}  onClick={() => openModal(customer.patient.name, customer.description, customer.uuid)}
+                       
+                        hover key={customer.id} selected={isSelected}>
+                         
+                          <TableCell 
+                          style={{cursor:'pointer'}}  onClick={() => openModal(customer.patient.name, customer.description, customer.uuid)}
+                          
+                          >
                             <Stack alignItems="center" direction="row" spacing={2}>
                               <Avatar src='' style={{ backgroundColor: '#009396'}}>
                                 {getInitials(customer.patient?.name)}

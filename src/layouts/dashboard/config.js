@@ -110,7 +110,15 @@ export const getItems = (userType) => {
         )
       },
 
-      
+      {
+        title: 'Pharmacy',
+        path: '/pharmacy',
+        icon: (
+          <SvgIcon fontSize="small">
+            <UserCircleIcon />
+          </SvgIcon>
+        )
+      },
       
       {
         title: 'Manage CHO',
@@ -174,16 +182,7 @@ export const getItems = (userType) => {
       )
     },
 
-    
-    {
-      title: 'Appointments',
-      path: '/Appointments',
-      icon: (
-        <SvgIcon fontSize="small">
-          <CalendarIcon />
-        </SvgIcon>
-      )
-    },
+   
   
   ];
   }else if(userType === 'finance') {
@@ -191,6 +190,17 @@ export const getItems = (userType) => {
     return [{
       title: 'Manage Finance',
       path: '/ManageFinance',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserCircleIcon />
+        </SvgIcon>
+      )
+    },];
+  }else if(userType === 'pharmacy') {
+
+    return [{
+      title: 'Pharmacy',
+      path: '/pharmacy',
       icon: (
         <SvgIcon fontSize="small">
           <UserCircleIcon />

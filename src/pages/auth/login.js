@@ -205,9 +205,9 @@ const mySubmit = async () => {
         <MenuItem value="nurse">Nurse</MenuItem>
         <MenuItem value="lab">Lab</MenuItem>
         <MenuItem value="doctor">Doctor</MenuItem>
-        {/* <MenuItem value="cho">CHO</MenuItem> */}
+        <MenuItem value="pharmacy">Pharmacy</MenuItem>
         <MenuItem value="hdo">Health Desk Officer</MenuItem>
-        <MenuItem value="user">User</MenuItem>
+        {/* <MenuItem value="user">User</MenuItem> */}
         <MenuItem value="finance">Finance</MenuItem>
       </Select>
     

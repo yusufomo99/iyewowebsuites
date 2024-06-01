@@ -20,6 +20,8 @@ import { getInitials } from 'src/utils/get-initials';
 import ManagePatients from '../../pages/ManagePatients';
 import approveDepositAPI from './approveDepositAPI' ;
 import DepositModal from './DepositModal';
+import DeclineModal from './DeclineModal'; 
+import declineAPI from './declineAPI';
 export const CustomersTable = (props) => {
   const {
     count = 0,
@@ -41,6 +43,30 @@ export const CustomersTable = (props) => {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [depositUuid, setdepositUuid] = useState('');
+  const [transUuid, settransUuid] = useState('');
+  const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
+
+  const handleOpenDeclineModal = (uuid) => {
+   
+    settransUuid(uuid)
+    setIsDeclineModalOpen(true);
+
+  };
+
+  const handleCloseDeclineModal = () => {
+    setIsDeclineModalOpen(false);
+  };
+
+  const handleDeclineSubmit = (reason) => {
+    alert("API completion is being finalized ")
+    // Handle the reason for declining here
+    // console.log('Reason for declining:', reason);
+    //  declineAPI(transUuid,reason)
+    //  setIsDeclineModalOpen(false)
+  };
+
+
+
   const handleManagePatientsOpen = (patient) => {
     setSelectedPatient(patient);
     setIsManagePatientsOpen(true);
@@ -81,6 +107,12 @@ const declineFunc = ()=>{
                   onClose={handleManagePatientsClose}
                   patientData={selectedPatient}
                 />
+
+<DeclineModal
+        open={isDeclineModalOpen}
+        onClose={handleCloseDeclineModal}
+        onSubmit={handleDeclineSubmit}
+      />
       <Scrollbar>
         <Box sx={{ minWidth: 800 }}>
 
@@ -207,7 +239,7 @@ const declineFunc = ()=>{
           cursor: 'pointer',
           border: 'none',
         }}
-        onClick={declineFunc}
+        onClick={()=>{handleOpenDeclineModal(customer.uuid)}}
       >
         Decline
       </button>

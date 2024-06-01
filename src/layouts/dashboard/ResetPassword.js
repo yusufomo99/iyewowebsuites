@@ -33,11 +33,25 @@ const ResetPassword = ({ open, onClose }) => {
   };
 
   const handleSubmit = () => {
-    // Add logic for password reset
-    // console.log('Old Password:', oldPassword);
-    // console.log('New Password:', newPassword);
-    // console.log('Confirm Password:', confirmPassword);
-    alert("API for this feature is being completed")
+    if (newPassword.length < 8) {
+      alert('Password should be at least 8 characters.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match.');
+      return;
+    }
+
+    // Proceed with password reset logic
+    console.log({ oldPassword, newPassword, confirmPassword });
+    alert("API for this feature is being completed");
+
+    // Reset fields
+    setOldPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+
     onClose();
   };
 

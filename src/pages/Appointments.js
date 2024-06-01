@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useState , useEffect} from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, SvgIcon, Typography, TextField } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Appointmentstable } from 'src/sections/customer/appointments-table';
@@ -15,11 +15,6 @@ import getDoctorssAPI from './getDoctorssAPI';
 import { useRouter } from 'next/navigation';
 
 const now = new Date();
-
-
-
-
-
 
 const useCustomerIds = (customers) => {
   return useMemo(
@@ -34,42 +29,30 @@ const Page = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const customers = useCustomers(page, rowsPerPage);
-  // const customersIds = useCustomerIds(customers);
-  // const customersSelection = useSelection(customersIds);
-  const [choData, setchoData] = useState()
-  const [allDoctors, setallDoctors]=useState()
+  const [choData, setchoData] = useState();
+  const [allDoctors, setallDoctors] = useState();
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
-  const fetchCHO = (fetchedData)=>{
-    setchoData(fetchedData)
+  const fetchCHO = (fetchedData) => {
+    setchoData(fetchedData);
+  };
 
-  }
-
-  const reloginContext = ()=>{
+  const reloginContext = () => {
     router.push('/auth/login');
+  };
 
-  }
+  const fetchDoctors = (fetchedData) => {
+    setallDoctors(fetchedData);
+  };
 
- 
+  useEffect(() => {
+    getPendingAppointments(fetchCHO, page, reloginContext, startDate, endDate);
+  }, [page, startDate, endDate]);
 
-  const fetchDoctors = (fetchedData)=>{
-    setallDoctors(fetchedData)
-
-  }
-  
-useEffect(()=>{
-  setchoData();
-  getPendingAppointments(fetchCHO,page, reloginContext)
-
-
-},[page])
-
-
-useEffect(()=>{
-  getDoctorssAPI(fetchDoctors)
-
-},[])
-
+  useEffect(() => {
+    getDoctorssAPI(fetchDoctors);
+  }, []);
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -78,8 +61,6 @@ useEffect(()=>{
     []
   );
 
- 
-
   const handleRowsPerPageChange = useCallback(
     (event) => {
       setRowsPerPage(event.target.value);
@@ -87,10 +68,21 @@ useEffect(()=>{
     []
   );
 
+  const handleDateChange = (type, value) => {
+    if (type === 'start') {
+      setStartDate(value);
+    } else if (type === 'end') {
+      setEndDate(value);
+    }
+  };
+
+  const handleSearch = () => {
+    setchoData([]);
+    getPendingAppointments(fetchCHO, page, reloginContext, startDate, endDate);
+  };
+
   return (
     <>
-
-   
       <Head>
         <title>
           Iyewo
@@ -112,7 +104,7 @@ useEffect(()=>{
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-               Manage Appointments
+                  Manage Appointments
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -154,19 +146,51 @@ useEffect(()=>{
                 </Button>
               </div> */}
             </Stack>
-            <CustomersSearch />
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={1}
+            >
+              <CustomersSearch />
+              <TextField
+                id="startDate"
+                label="Start Date"
+                type="date"
+                value={startDate}
+                onChange={(e) => handleDateChange('start', e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{ marginLeft: 2, marginRight: 2 }}
+              />
+              <TextField
+                id="endDate"
+                label="End Date"
+                type="date"
+                value={endDate}
+                onChange={(e) => handleDateChange('end', e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{ marginLeft: 2, marginRight: 2 }}
+              />
+              <Button
+                onClick={handleSearch}
+                
+                variant="contained"
+                style={{ backgroundColor: '#009396' }}
+              >
+                Search
+              </Button>
+            </Stack>
             <Appointmentstable
               count={choData?.meta?.total}
               items={choData?.data}
-             
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-             
               page={page}
               rowsPerPage={choData?.meta?.per_page}
-           
               allDoctors={allDoctors}
-              
             />
           </Stack>
         </Container>

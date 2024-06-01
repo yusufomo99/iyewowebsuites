@@ -9,6 +9,8 @@ const HealthDeskModal = ({ open, onClose, data={} }) => {
     alert(`You assigned this patient to ${pname}. BUT This api is not fully ready`)
     }
   const fieldsToDisplay = [
+    'gender',
+    'dob',
     'heart_rate',
     'systolic_blood_pressure',
     'diastolic_blood_pressure',
@@ -41,7 +43,7 @@ const HealthDeskModal = ({ open, onClose, data={} }) => {
         }}
       >
         <Typography variant="h6" component="h2" gutterBottom>
-          Health Metrics
+          Recent Health Metrics
         </Typography>
         <Stack spacing={2}>
           <Paper sx={{ p: 2 }}>
@@ -67,19 +69,20 @@ const HealthDeskModal = ({ open, onClose, data={} }) => {
             ))}
           </Paper>
         </Stack>
-        <TextField
+        {/* <TextField
         id="name"
         label="Assign a Nurse"
     placeholder='Name here'
         value={pname}
         onChange={(e) => setName(e.target.value)}
-      />
+      /> */}
         <Box mt={3} textAlign="center">
           <Button  variant="contained" color="primary" onClick={onClose}>
             Close
-          </Button>  <Button style={{ backgroundColor: '#008889' }} variant="contained" color="primary" onClick={assignNurse}>
+          </Button> 
+           {/* <Button style={{ backgroundColor: '#008889' }} variant="contained" color="primary" onClick={assignNurse}>
             Assign Nurse
-          </Button>
+          </Button> */}
         </Box>
       </Box>
     </Modal>
