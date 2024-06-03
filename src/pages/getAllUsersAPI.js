@@ -2,6 +2,7 @@ import baseUrl from '../apiConfig';
 import { useRouter } from 'next/router';
 
 const getAllUsersAPI = async (fetchUsers,searchQuery) => {
+  alert(searchQuery)
   try {
     // alert(page)
     // Retrieve the access token from local storage

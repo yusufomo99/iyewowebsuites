@@ -45,13 +45,16 @@ const ManagePatients = ({ isOpen, onClose, patientData, apptUuid = '', medicalRe
   }, [patientRecord]);
 
   useEffect(()=>{
-   if(patientRecord){
-    setSystolicBP(patientRecord.systolic_blood_pressure)
-    setDiastolicBP(patientRecord.diastolic_blood_pressure)
-    setPulseRate(patientRecord.pulse_rate)
-    setTemperature(patientRecord.temperature)
-    setSpo2(patientRecord.spo2)
-   }
+  setTimeout(()=>{
+
+    if(patientRecord){
+      setSystolicBP(patientRecord.systolic_blood_pressure)
+      setDiastolicBP(patientRecord.diastolic_blood_pressure)
+      setPulseRate(patientRecord.pulse_rate)
+      setTemperature(patientRecord.temperature)
+      setSpo2(patientRecord.spo2)
+     }
+  },1000)
 
 
   },[])

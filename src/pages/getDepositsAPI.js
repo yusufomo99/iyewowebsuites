@@ -16,7 +16,7 @@ const getDepositsAPI = async (loadFinance,searchQuery) => {
     let apiUrl;
 
     if(searchQuery){
-      apiUrl = `${baseUrl}/api/admin/deposits?status=pending&search=${encodeURIComponent(searchQuery)}`
+      apiUrl = `${baseUrl}/api/admin/deposits?status=pending&search=${searchQuery}`
     }else {
        apiUrl = `${baseUrl}/api/admin/deposits?status=pending`;
       }

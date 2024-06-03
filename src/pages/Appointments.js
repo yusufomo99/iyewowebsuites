@@ -33,6 +33,12 @@ const Page = () => {
   const [allDoctors, setallDoctors] = useState();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   const fetchCHO = (fetchedData) => {
     setchoData(fetchedData);
@@ -77,8 +83,9 @@ const Page = () => {
   };
 
   const handleSearch = () => {
+
     setchoData([]);
-    getPendingAppointments(fetchCHO, page, reloginContext, startDate, endDate);
+    getPendingAppointments(fetchCHO, page, reloginContext,searchQuery, startDate, endDate);
   };
 
   return (
@@ -151,7 +158,10 @@ const Page = () => {
               direction="row"
               spacing={1}
             >
-              <CustomersSearch />
+         <CustomersSearch 
+                handleSearchChange={handleSearchChange}
+                searchQuery={searchQuery}
+              />
               <TextField
                 id="startDate"
                 label="Start Date"

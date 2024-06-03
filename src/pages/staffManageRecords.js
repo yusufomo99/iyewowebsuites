@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
@@ -8,10 +8,12 @@ import { Box, Button, Container, Stack, SvgIcon, Typography, TextField } from '@
 import { DatePicker, LocalizationProvider, AdapterDateFns } from '@mui/x-date-pickers';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/laboratory-table';
+import { CustomersTable } from 'src/sections/customer/staffManageRecords-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import getAllUsersAPI from './getApprovedgAppointmentsLab';
+import getApprovedgAppointments from './getApprovedgAppointments';
+import { useRouter } from 'next/navigation';
+import { items } from 'src/layouts/dashboard/config';
 
 const now = new Date();
 
@@ -52,32 +54,37 @@ const useCustomerIds = (customers) => {
 };
 
 const Page = () => {
-  const [page, setPage] = useState(0);
+  const router = useRouter();
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
-  const [allUsers, setAllUsers] = useState([]);
+  const [appData, setAppData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  const fetchUsers = (data) => {
-    setAllUsers(data);
-  };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const queryFunc = () => {
-    setAllUsers([]);
-    getAllUsersAPI(fetchUsers, searchQuery, startDate, endDate);
+    setAppData([]);
+    getApprovedgAppointments(fetchApp, page, reloginContext, searchQuery, startDate, endDate);
+  };
+
+  const fetchApp = (fetchedData) => {
+    setAppData(fetchedData);
+  };
+
+  const reloginContext = () => {
+    router.push('/auth/login');
   };
 
   useEffect(() => {
-    getAllUsersAPI(fetchUsers);
-  }, []);
+    getApprovedgAppointments(fetchApp, page, reloginContext);
+  }, [page]);
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -116,9 +123,10 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Manage Patients' Laboratory Records
+                  Manage Patients
                 </Typography>
               </Stack>
+              <div></div>
             </Stack>
             <Stack
               alignItems="center"
@@ -153,7 +161,7 @@ const Page = () => {
             </Stack>
             <CustomersTable
               count={data.length}
-              items={allUsers?.data}
+              items={appData?.data}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
               onPageChange={handlePageChange}

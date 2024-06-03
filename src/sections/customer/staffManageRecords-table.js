@@ -71,6 +71,7 @@ export const CustomersTable = (props) => {
     setSelectedMedicalRecords(customer.medical_records);
     // setlabRecords(customer.lab_records)
     setcreated_at(customer.created_at)
+   setlabRecords(customer.lab_records)
 
     setViewMedicalRecordsOpen(true);
   };
@@ -151,25 +152,16 @@ export const CustomersTable = (props) => {
 
                   return (
                     <TableRow
-
+                    style={{ cursor: 'pointer' }}
                       hover
                       key={customer.uuid} selected={isSelected}
-
+                      onClick={() => handleViewMedicalRecordsOpen(customer)}
 
                     >
 
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                    
+                     
                       >
                         <Stack alignItems="center" direction="row" spacing={2}>
                           <Avatar src='' style={{ backgroundColor: '#009396' }}>{getInitials(customer.doctor.name)}</Avatar>
@@ -177,80 +169,35 @@ export const CustomersTable = (props) => {
                         </Stack>
                       </TableCell>
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                   
+                      
                       >{customer.doctor.phone}</TableCell>
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                   
+                      
                       >
                         {customer.description ? customer.description : 'NA'}
                       </TableCell>
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                  
+                      
                       >{customer.patient.systolic_blood_pressure}</TableCell>
                       {/* <TableCell>
                         {customer.condition}
                       </TableCell> */}
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                    
+                       
                       >{customer.patient.diastolic_blood_pressure}
                       </TableCell>
                       <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleManagePatientsOpen(
-                          customer.patient.name,
-                          customer.uuid,
-                          customer.medical_records,
-                          customer.lab_records,
-                          customer.description,
-                          customer.patient,
-
-                        )
-                        }
+                   
+                     
                       >{customer.patient.bmi}</TableCell>
 
                       <TableCell>
                       <div style={{ display: 'flex' }}>
-  <button
+  {/* <button
     style={{
       backgroundColor: '#003396',
       color: '#fff',
@@ -272,7 +219,7 @@ export const CustomersTable = (props) => {
     }
   >
     Add Record
-  </button>
+  </button> */}
 
   <button
     style={{

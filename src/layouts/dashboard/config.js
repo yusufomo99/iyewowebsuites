@@ -169,7 +169,17 @@ export const getItems = (userType) => {
         <SvgIcon fontSize="small">
           <MagnifyingGlassPlusIcon />
         </SvgIcon>
-      )},];
+      )},
+      {
+        title: 'Manage Patient Records',
+        path: '/staffManageRecords',
+        icon: (
+          <SvgIcon fontSize="small">
+            <MagnifyingGlassPlusIcon />
+          </SvgIcon>
+        )},
+    
+    ];
   }else if(userType === 'nurse') {
 
     return [{
@@ -182,7 +192,14 @@ export const getItems = (userType) => {
       )
     },
 
-   
+    {
+      title: 'Manage Patient Records',
+      path: '/staffManageRecords',
+      icon: (
+        <SvgIcon fontSize="small">
+          <MagnifyingGlassPlusIcon />
+        </SvgIcon>
+      )}
   
   ];
   }else if(userType === 'finance') {
@@ -206,7 +223,17 @@ export const getItems = (userType) => {
           <UserCircleIcon />
         </SvgIcon>
       )
-    },];
+    },
+  
+    {
+      title: 'Manage Patient Records',
+      path: '/staffManageRecords',
+      icon: (
+        <SvgIcon fontSize="small">
+          <MagnifyingGlassPlusIcon />
+        </SvgIcon>
+      )}
+  ];
   }else if(userType === 'hdo') {
 
     return [{
@@ -230,6 +257,15 @@ export const getItems = (userType) => {
       )
     },
   
+    {
+      title: 'Manage Patient Records',
+      path: '/staffManageRecords',
+      icon: (
+        <SvgIcon fontSize="small">
+          <MagnifyingGlassPlusIcon />
+        </SvgIcon>
+      )}
+
   ];
   }
 

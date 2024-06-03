@@ -1,7 +1,7 @@
 import baseUrl from '../apiConfig';
 import { useRouter } from 'next/router';
 
-const getCHOs = async (fetchAllCHOs) => {
+const getCHOs = async (fetchAllCHOs,searchQuery) => {
   try {
     // alert(page)
     // Retrieve the access token from local storage
@@ -12,8 +12,13 @@ const getCHOs = async (fetchAllCHOs) => {
       alert('Access token not found in local storage');
       return;
     }
+    let apiUrl;
+if(searchQuery){
+  apiUrl = `${baseUrl}/api/admin/cho?search=${searchQuery}`;
+}else{
+  apiUrl = `${baseUrl}/api/admin/cho`;
 
- let apiUrl = `${baseUrl}/api/admin/cho`;
+}
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {

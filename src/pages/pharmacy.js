@@ -11,7 +11,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/pharmacy-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import getAllUsersAPI from './getApprovedgAppointments';
+import getAllUsersAPI from './getApprovedgAppointmentsLab';
 
 const now = new Date();
 

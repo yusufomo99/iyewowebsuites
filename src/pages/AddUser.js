@@ -35,6 +35,8 @@ const Page = () => {
       setPassword('');
       setConfirmPassword('');
     });
+
+    
   };
 
   return (
@@ -55,6 +57,7 @@ const Page = () => {
               value={type}
               label="Role"
               onChange={(e) => setUserRole(e.target.value)}
+              required
             >
               <MenuItem value="nurse">Nurse</MenuItem>
               <MenuItem value="lab">Lab</MenuItem>
@@ -71,13 +74,14 @@ const Page = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
+            required
           />
           <Typography variant="body2">
             An email address is required as the login for staff. This ensures that they receive notifications via email whenever a task is assigned to them.
           </Typography>
           <TextField
             id="email"
-            label="Username"
+            label="Email: Username"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -94,6 +98,7 @@ const Page = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
+            required
           />
           <TextField
             id="confirm-password"
@@ -102,6 +107,7 @@ const Page = () => {
             value={passwordConfirmation}
             onChange={(e) => setConfirmPassword(e.target.value)}
             fullWidth
+            required
           />
           <TextField
             id="staffnumber"
@@ -109,6 +115,7 @@ const Page = () => {
             value={staffnumber}
             onChange={(e) => setStaffnumber(e.target.value)}
             fullWidth
+       
           />
           <Button disabled={loading} type="submit" variant="contained" style={{ backgroundColor: '#008889' }}>
             {loading ? '...Submitting' : 'Submit'}

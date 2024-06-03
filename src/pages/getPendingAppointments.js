@@ -1,7 +1,7 @@
 import baseUrl from '../apiConfig';
 import { useRouter } from 'next/router';
 
-const getPendingAppointments = async (fetchCHO,page, reloginContext) => {
+const getPendingAppointments = async (fetchCHO,page, reloginContext,searchQuery) => {
   try {
     // alert(page)
     // Retrieve the access token from local storage
@@ -12,8 +12,14 @@ const getPendingAppointments = async (fetchCHO,page, reloginContext) => {
       alert('Access token not found in local storage');
       return;
     }
+    let apiUrl ;
 
- let apiUrl = `${baseUrl}/api/admin/appointments?status=pending&page=${page}&per_page=10`
+    if(searchQuery){
+apiUrl =  `${baseUrl}/api/admin/appointments?status=pending&page=${page}&search=${searchQuery}&per_page=10`
+      
+    }else {apiUrl =  `${baseUrl}/api/admin/appointments?status=pending&page=${page}&per_page=10`}
+
+
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {

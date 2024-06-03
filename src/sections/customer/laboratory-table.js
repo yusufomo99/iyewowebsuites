@@ -110,7 +110,7 @@ export const CustomersTable = (props) => {
                       </TableCell> */}
                       <TableCell >
                         <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar src='' style={{ backgroundColor: '#009396'}}>{getInitials(customer.patient.name)}</Avatar>
+                        <Avatar src='' style={{ backgroundColor: '#009396'}}>{getInitials(customer.patient?.name)}</Avatar>
                           <Typography variant="subtitle2">{customer.patient.name}</Typography>
                         </Stack>
                       </TableCell>

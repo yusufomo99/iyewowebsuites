@@ -1,13 +1,13 @@
 import baseUrl from '../apiConfig';
 import { useRouter } from 'next/router';
 
-const getApprovedgAppointments = async (fetchCHO,page, reloginContext,searchQuery) => {
+const getApprovedgAppointmentsLab = async (fetchCHO,searchQuery,startDate, endDate) => {
 
   let apiUrl;
   if (searchQuery){
-    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=50&search=${searchQuery}`
+    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&per_page=50&search=${searchQuery}`
   }else {
-    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&page=${page}&per_page=50`
+    apiUrl = `${baseUrl}/api/admin/appointments?status=approved&per_page=50`
   }
   try {
     // alert(page)
@@ -36,15 +36,15 @@ const getApprovedgAppointments = async (fetchCHO,page, reloginContext,searchQuer
       //  console.log('Approved Appointments:', data);
     } else {
       // Handle errors here
-      reloginContext()
+    //   reloginContext()
       // alert('Authentication-Network Error. Sign out & Sign in again: Failed to fetch pending appointments');
     //   throw new Error('Failed to fetch pending appointments');
     }
   } catch (error) {
     // console.error('An error occurred during the GET request:', error);
     // throw error;
-    reloginContext()
+    // reloginContext()
   }
 };
 
-export default getApprovedgAppointments;
+export default getApprovedgAppointmentsLab;
