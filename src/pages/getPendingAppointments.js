@@ -26,7 +26,7 @@ const getPendingAppointments = async (fetchCHO,page, reloginContext) => {
       const data = await response.json();
       fetchCHO(data)
       // Handle the data from the API response
-      // console.log('Pending Appointments:', data);
+     console.log('Pending Appointments:', data);
     } else {
       // Handle errors here
       reloginContext()

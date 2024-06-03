@@ -1,9 +1,8 @@
-// CreateCHOApi.js
-// CreateCHOApi.js
+
 import baseUrl from '../../apiConfig'; // Adjust the path accordingly
 
 const declineAPI = async (transUuid,reason) => {
- 
+ console.log(reason)
   try {
     // Retrieve the access token from local storage
     const accessToken = localStorage.getItem('access_token');
@@ -30,12 +29,13 @@ const declineAPI = async (transUuid,reason) => {
       // Handle the data from the API response
     //   OnDataSuccess();
     alert("Transaction decline successfully")
+    window.location.reload();
      
     } else {
       // Handle errors here
-      alert("Error Submitting Apointment")
+      alert("Error declining transaction")
     //   dataReset();
-    alert("There was error submitting Data")
+    alert("There was error declining transaction")
       console.error('Failed :', response);
     //   throw new Error('Failed to create CHO');
  

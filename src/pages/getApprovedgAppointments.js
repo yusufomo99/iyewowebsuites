@@ -33,7 +33,7 @@ const getApprovedgAppointments = async (fetchCHO,page, reloginContext,searchQuer
       const data = await response.json();
       fetchCHO(data)
       // Handle the data from the API response
-      //  console.log('Approved Appointments:', data);
+        console.log('Approved Appointments:', data);
     } else {
       // Handle errors here
       reloginContext()

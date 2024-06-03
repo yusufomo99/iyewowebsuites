@@ -48,15 +48,19 @@ export const CustomersTable = (props) => {
   const [medicalRecords, setmedicalRecords] = useState()
   const [labRecords, setlabRecords] = useState()
   const [description, setdescription] = useState()
+  const [patientRecord, setpatientRecord] = useState()
+  const [labRecord, setlabRecord] = useState()
 
   
-  const handleManagePatientsOpen = (patient,uuid,md,ld, description) => {
+  const handleManagePatientsOpen = (patient,uuid,md,ld, description,patientRecord) => {
       setSelectedPatient(patient);
       setapptUuid(uuid)
       setmedicalRecords(md)
       setlabRecords(ld)
       setdescription(description)
       setIsManagePatientsOpen(true);
+      setpatientRecord(patientRecord)
+
   };
 
   const handleManagePatientsClose = () => {
@@ -85,13 +89,15 @@ export const CustomersTable = (props) => {
                   patientData={selectedPatient}
                   apptUuid={apptUuid}
                   description={description}
+                  patientRecord={patientRecord}
+                  labRecords={labRecords}
                 />
             <Table>
               <TableHead>
                 <TableRow>
                   
                   <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
+                  <TableCell>Phone</TableCell>
                   <TableCell>MEDICAL CONDITION</TableCell>
                   <TableCell>Systolic Blood Pressure</TableCell>
                   {/* <TableCell>MEDICAL CONDITION</TableCell> */}
@@ -111,7 +117,9 @@ export const CustomersTable = (props) => {
                       customer.uuid,
                       customer.medical_records,
                       customer.lab_records,
-                      customer.description 
+                      customer.description,
+                      customer.patient,
+                  
                       )
                       }
                     >
@@ -122,7 +130,7 @@ export const CustomersTable = (props) => {
                           <Typography variant="subtitle2">{customer.patient.name}</Typography>
                         </Stack>
                       </TableCell>
-                      <TableCell>{customer.doctor.email}</TableCell>
+                      <TableCell>{customer.doctor.phone}</TableCell>
                       <TableCell>
                         {customer.description ? customer.description : 'NA'}
                       </TableCell>

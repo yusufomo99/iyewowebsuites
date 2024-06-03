@@ -57,11 +57,12 @@ export const CustomersTable = (props) => {
     setIsDeclineModalOpen(false);
   };
 
-  const handleDeclineSubmit = (reason) => {
-    alert("API completion is being finalized ")
+  const handleDeclineSubmit = (thereason) => {
+    // alert("API completion is being finalized ")
     // Handle the reason for declining here
     // console.log('Reason for declining:', reason);
-    //  declineAPI(transUuid,reason)
+    const data = {'reason':thereason}
+     declineAPI(transUuid,data)
     //  setIsDeclineModalOpen(false)
   };
 
