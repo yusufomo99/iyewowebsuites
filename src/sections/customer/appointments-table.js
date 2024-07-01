@@ -28,6 +28,7 @@ export const Appointmentstable = (props) => {
     rowsPerPage = 0,
     selected = [],
     allDoctors = [],
+    allNurses = []
   } = props;
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -55,6 +56,7 @@ export const Appointmentstable = (props) => {
             closeModal={closeModal}
             allDoctors={allDoctors}
             appointmentUuid={appointmentUuid}
+            allNurses={allNurses}
           />
 
           <Card>

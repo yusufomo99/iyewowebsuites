@@ -95,7 +95,10 @@ export const CustomersTable = (props) => {
                   // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                   return (
-                    <TableRow style={{cursor:'pointer'}} onClick={()=>{openModal( customer.patient.uuid)}} hover key={customer.id} selected={isSelected}>
+                    <TableRow
+                     style={{cursor:'pointer'}} onClick={()=>{openModal( customer.patient.uuid)}} hover key={customer.id} selected={isSelected}
+                     
+                     >
                       {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isSelected}

@@ -35,7 +35,9 @@ const createAcct = async (data,dataReset) => {
       // Handle errors here
     //   alert(response.errors)
       dataReset();
-   alert('Failed to create User:', response);
+      const errorDetails = await response.json();
+      // console.log(errorDetails,'errorDetails')
+  alert(errorDetails.message);
     //   throw new Error('Failed to create CHO');
  
     }

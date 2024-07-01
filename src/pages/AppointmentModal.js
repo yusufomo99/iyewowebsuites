@@ -9,59 +9,57 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 const { format } = require('date-fns');
-import assignAppointmentAPI  from './assignAppointmentAPI'
-
+import assignAppointmentAPI from './assignAppointmentAPI';
 import Box from '@mui/material/Box';
-
 
 const AppointmentModal = ({
   modalIsOpen,
   patientName,
   patientCondition,
   closeModal,
-  allDoctors=[],
+  allDoctors = [],
+  allNurses = [], // Add this line to accept nurses as props
   appointmentUuid,
 }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [selectedDoctor, setselectedDoctor] = useState();
-  const [selectedDate, setselectedDate] =useState()
-  const [assignText, setassignText ] = useState('Assign')
-  const [assignloading, setassignLoading] = useState(false)
+  const [selectedDoctor, setSelectedDoctor] = useState();
+  const [selectedNurse, setSelectedNurse] = useState(); // Add this line for nurse selection
+  const [selectedDate, setSelectedDate] = useState();
+  const [assignText, setAssignText] = useState('Assign');
+  const [assignLoading, setAssignLoading] = useState(false);
 
-useEffect(()=>{
-  ResetData()
+ 
 
-},[])
-  const OnDataSuccess = ()=>{
-    setShowSuccessMessage(true)
-  }
+  useEffect(() => {
+    ResetData();
+  }, []);
 
+  const OnDataSuccess = () => {
+    setShowSuccessMessage(true);
+  };
 
-  const ResetData = ()=>{
-    setShowSuccessMessage(false)
-    setassignLoading(false)
-    setassignText('Assign')
+  const ResetData = () => {
+    setShowSuccessMessage(false);
+    setAssignLoading(false);
+    setAssignText('Assign');
+  };
 
-
-  }
-
-
-  const handleAssignAppointment = (a,b) => {
-     setassignLoading(true)
-     setassignText('Processing')
-    const inputDate = new Date(b);
+  const handleAssignAppointment = (doctorId, nurseId, date) => {
+    setAssignLoading(true);
+    setAssignText('Processing');
+    const inputDate = new Date(date);
 
     const formattedDate = format(inputDate, 'yyyy-MM-dd');
     const formattedTime = format(inputDate, 'HH:mm');
-    
+
     const AppointmentData = {
-      "doctor_id":a,
-      "appointment_date": formattedDate,
-      "appointment_time": formattedTime
+      doctor_id: doctorId,
+      nurse_id: nurseId, // Add nurse ID to the appointment data
+      appointment_date: formattedDate,
+      appointment_time: formattedTime
     };
 
-    assignAppointmentAPI(AppointmentData, OnDataSuccess, ResetData,appointmentUuid)
-
+    assignAppointmentAPI(AppointmentData, OnDataSuccess, ResetData, appointmentUuid);
   };
 
   return (
@@ -92,39 +90,46 @@ useEffect(()=>{
           />
           <Autocomplete
             value={selectedDoctor}
-            onChange={(event, newValue) => setselectedDoctor(newValue)}
+            onChange={(event, newValue) => setSelectedDoctor(newValue)}
             options={allDoctors}
             getOptionLabel={(option) => option.name + ' - ' + option.email}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Doctor on Duty"
-                // variant="outlined"
+                label="Select a doctor"
                 fullWidth
               />
             )}
           />
-
+          <Autocomplete
+            value={selectedNurse} // Add this block for nurse selection
+            onChange={(event, newValue) => setSelectedNurse(newValue)}
+            options={allNurses}
+            getOptionLabel={(option) => option.name + ' - ' + option.email}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select a nurse"
+                fullWidth
+              />
+            )}
+          />
           <Box mt={2}>
             <Typography variant="subtitle1">Appointment Date and Time</Typography>
             <DateTimePicker
-  label="Appointment Date and Time"
-  value={selectedDate}
-  onChange={(e) => setselectedDate(e)}
-  renderInput={(params) => <TextField {...params} variant="outlined" fullWidth />}
-/>
-
+              label="Appointment Date and Time"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e)}
+              renderInput={(params) => <TextField {...params} variant="outlined" fullWidth />}
+            />
           </Box>
-
           <Box mt={2} display="flex" justifyContent="space-between">
-
-
-           {!showSuccessMessage && <Button variant="contained" 
-            disabled={assignloading}
-            style={{ backgroundColor: '#009396', color: '#fff' }}
-             onClick={()=>{handleAssignAppointment(selectedDoctor.uuid, selectedDate )}}
-             >
-            {assignText}
+            {!showSuccessMessage && <Button variant="contained" 
+              disabled={assignLoading}
+              style={{ backgroundColor: '#009396', color: '#fff' }}
+              onClick={() => { handleAssignAppointment(selectedDoctor.uuid, selectedNurse.uuid, selectedDate) }}
+            >
+              {assignText}
             </Button>}
             <Button variant="contained" style={{ backgroundColor: '#f6b219', color: '#fff' }} onClick={closeModal}>
               Close

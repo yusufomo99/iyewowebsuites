@@ -71,6 +71,7 @@ export const CustomersTable = (props) => {
     setSelectedMedicalRecords(customer.medical_records);
     // setlabRecords(customer.lab_records)
     setcreated_at(customer.created_at)
+   setlabRecords(customer.lab_records)
 
     setViewMedicalRecordsOpen(true);
   };

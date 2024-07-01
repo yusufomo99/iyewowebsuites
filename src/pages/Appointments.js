@@ -12,6 +12,7 @@ import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import getPendingAppointments from './getPendingAppointments';
 import getDoctorssAPI from './getDoctorssAPI';
+import getNursesAPI from './getNursesAPI';
 import { useRouter } from 'next/navigation';
 
 const now = new Date();
@@ -31,6 +32,7 @@ const Page = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [choData, setchoData] = useState();
   const [allDoctors, setallDoctors] = useState();
+  const [allNurses, setallNurses] = useState();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -52,12 +54,17 @@ const Page = () => {
     setallDoctors(fetchedData);
   };
 
+  const fetchNurses = (fetchedData) => {
+    setallNurses(fetchedData);
+  };
+
   useEffect(() => {
     getPendingAppointments(fetchCHO, page, reloginContext, startDate, endDate);
   }, [page, startDate, endDate]);
 
   useEffect(() => {
     getDoctorssAPI(fetchDoctors);
+    getNursesAPI(fetchNurses)
   }, []);
 
   const handlePageChange = useCallback(
@@ -201,6 +208,7 @@ const Page = () => {
               page={page}
               rowsPerPage={choData?.meta?.per_page}
               allDoctors={allDoctors}
+              allNurses={allNurses}
             />
           </Stack>
         </Container>
